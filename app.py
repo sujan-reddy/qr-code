@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, request, jsonify
+from flask import Flask, render_template, Response, jsonify
 import cv2
 from pyzbar import pyzbar
 import numpy as np
@@ -70,20 +70,16 @@ def generate_frames():
 # Route for the index page
 @app.route('/')
 def index():
-    return render_template('index.html')
+    global latest_qr_code
+    with lock:
+        qr_code = latest_qr_code
+    return render_template('index.html', qr_code=qr_code)
 
 # Route for the video feed
 @app.route('/video_feed')
 def video_feed():
     return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
-# Route to get the latest QR code data
-@app.route('/get_latest_qr', methods=['GET'])
-def get_latest_qr():
-    global latest_qr_code
-    with lock:
-        return jsonify({'qr_code': latest_qr_code})
-
 # Run the Flask app
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Scanner</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
     <h1>QR Code Scanner</h1>
@@ -13,7 +12,7 @@
         <img src="{{ url_for('video_feed') }}" id="video" width="640" height="480">
     </div>
     <div>
-        <h2>Latest QR Code Data: <span id="qr-result">None</span></h2>
+        <h2>Latest QR Code Data: <span id="qr-result">{{ qr_code if qr_code else 'None' }}</span></h2>
     </div>
 </body>
 </html>
