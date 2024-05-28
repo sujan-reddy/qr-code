@@ -1,6 +1,6 @@
 from flask import Flask, render_template, Response, jsonify
 import cv2
-from pyzbar import pyzbar
+from pyzbar import *
 import numpy as np
 import threading
 
